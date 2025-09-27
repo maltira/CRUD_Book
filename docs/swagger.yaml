@@ -1,0 +1,118 @@
+basePath: /
+definitions:
+  controller.BookResponse:
+    properties:
+      author:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  entity.Book:
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: API Server for CRUD_Book Application
+  title: CRUD_Book API
+  version: "1.0"
+paths:
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает все книги из базы
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controller.BookResponse'
+            type: array
+      summary: Get list of books
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Удаляет книгу по ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete book
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Возвращает книгу из базы по id
+      parameters:
+      - description: Book_ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.BookResponse'
+      summary: Get book by id
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Создаёт новую книгу
+      parameters:
+      - description: Book info
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Book'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add a new book
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Обновляет книгу по ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated book info
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Book'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update book
+      tags:
+      - books
+swagger: "2.0"
