@@ -34,7 +34,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/controller.BookResponse"
+                                "$ref": "#/definitions/http.BookResponse"
                             }
                         }
                     }
@@ -67,7 +67,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.BookResponse"
+                            "$ref": "#/definitions/http.BookResponse"
                         }
                     }
                 }
@@ -152,7 +152,10 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.BookResponse": {
+        "domain.Book": {
+            "type": "object"
+        },
+        "http.BookResponse": {
             "type": "object",
             "properties": {
                 "author": {
@@ -174,9 +177,6 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        },
-        "domain.Book": {
-            "type": "object"
         }
     }
 }`

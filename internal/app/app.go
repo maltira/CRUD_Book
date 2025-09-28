@@ -3,10 +3,15 @@ package app
 import (
 	"CRUD/configs"
 	"CRUD/internal/database"
+	"CRUD/internal/delivery/http"
 	"CRUD/internal/domain"
-	"CRUD/internal/router"
-	"log"
+	"CRUD/internal/repository"
+	"CRUD/internal/service"
 	"os"
+
+	"log"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Run() {
@@ -14,16 +19,18 @@ func Run() {
 	configs.GetEnv()
 
 	// Database init
-	database.InitDatabase()
-	err := database.DB.AutoMigrate(&domain.Book{})
+	db := database.InitDatabase()
+	err := db.AutoMigrate(&domain.Book{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Router init
-	r := router.InitRouter()
-	err = r.Run(":" + os.Getenv("PORT"))
-	if err != nil {
-		log.Fatal(err)
-	}
+	// связываем слои
+	bookRepo := repository.NewBookRepository(db)
+	bookService := service.NewBookService(bookRepo)
+
+	r := gin.Default()
+	http.NewBookHandler(r, *bookService)
+
+	r.Run(":" + os.Getenv("PORT"))
 }
