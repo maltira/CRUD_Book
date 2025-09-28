@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"CRUD/src/config"
-	"CRUD/src/entity"
+	"CRUD/internal/database"
+	"CRUD/internal/domain"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,8 +28,8 @@ type BookResponse struct {
 // @Success 200 {array} BookResponse
 // @Router /books [get]
 func BookIndex(c *gin.Context) {
-	var books []entity.Book // Массив всех книг
-	config.DB.Find(&books)  // запись в books
+	var books []domain.Book  // Массив всех книг
+	database.DB.Find(&books) // запись в books
 
 	c.JSON(200, gin.H{
 		"code":  200,
@@ -47,9 +47,9 @@ func BookIndex(c *gin.Context) {
 // @Router /books/{id} [get]
 func BookById(c *gin.Context) {
 	id := c.Param("id")
-	var book entity.Book
+	var book domain.Book
 
-	config.DB.First(&book, id)
+	database.DB.First(&book, id)
 
 	c.JSON(200, gin.H{
 		"code": 200,
@@ -62,13 +62,13 @@ func BookById(c *gin.Context) {
 // @Tags books
 // @Accept json
 // @Produce json
-// @Param book body entity.Book true "Book info"
+// @Param book body domain.Book true "Book info"
 // @Router /books/{id} [post]
 func BookPost(c *gin.Context) {
-	var book entity.Book
+	var book domain.Book
 	c.Bind(&book) // берёт данные из тела запроса и заполняет структуру book
 
-	config.DB.Create(&book)
+	database.DB.Create(&book)
 
 	c.JSON(200, gin.H{
 		"code":    200,
@@ -82,18 +82,18 @@ func BookPost(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Book ID"
-// @Param book body entity.Book true "Updated book info"
+// @Param book body domain.Book true "Updated book info"
 // @Router /books/{id} [put]
 func BookPut(c *gin.Context) {
 	id := c.Param("id")
-	var book entity.Book
+	var book domain.Book
 
-	config.DB.First(&book, id)
+	database.DB.First(&book, id)
 
-	var updatedBook entity.Book
+	var updatedBook domain.Book
 	c.Bind(&updatedBook)
 
-	config.DB.Model(&book).Updates(entity.Book{
+	database.DB.Model(&book).Updates(domain.Book{
 		Title:  updatedBook.Title,
 		Author: updatedBook.Author,
 	})
@@ -112,7 +112,7 @@ func BookPut(c *gin.Context) {
 // @Router /books/{id} [delete]
 func BookDelete(c *gin.Context) {
 	id := c.Param("id")
-	config.DB.Unscoped().Delete(&entity.Book{}, id)
+	database.DB.Unscoped().Delete(&domain.Book{}, id)
 
 	c.JSON(200, gin.H{
 		"code":    200,

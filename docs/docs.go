@@ -98,7 +98,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.Book"
+                            "$ref": "#/definitions/domain.Book"
                         }
                     }
                 ],
@@ -123,7 +123,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.Book"
+                            "$ref": "#/definitions/domain.Book"
                         }
                     }
                 ],
@@ -175,7 +175,7 @@ const docTemplate = `{
                 }
             }
         },
-        "entity.Book": {
+        "domain.Book": {
             "type": "object"
         }
     }

@@ -15,7 +15,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  entity.Book:
+  domain.Book:
     type: object
 host: localhost:3000
 info:
@@ -86,7 +86,7 @@ paths:
         name: book
         required: true
         schema:
-          $ref: '#/definitions/entity.Book'
+          $ref: '#/definitions/domain.Book'
       produces:
       - application/json
       responses: {}
@@ -108,7 +108,7 @@ paths:
         name: book
         required: true
         schema:
-          $ref: '#/definitions/entity.Book'
+          $ref: '#/definitions/domain.Book'
       produces:
       - application/json
       responses: {}

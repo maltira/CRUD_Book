@@ -92,7 +92,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.Book"
+                            "$ref": "#/definitions/domain.Book"
                         }
                     }
                 ],
@@ -117,7 +117,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.Book"
+                            "$ref": "#/definitions/domain.Book"
                         }
                     }
                 ],
@@ -169,7 +169,7 @@
                 }
             }
         },
-        "entity.Book": {
+        "domain.Book": {
             "type": "object"
         }
     }
